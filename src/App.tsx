@@ -6,12 +6,46 @@ import useTodo from './hooks/useTodo';
 const PLACEHOLDER = '오늘 할일을 입력해주세요.';
 
 function App() {
-  const { getTodoList } = useTodo();
+  const { getTodoList, insertTodoItem } = useTodo();
   const [list, setList] = useState<Array<Todo>>([]);
+  const [content, setContent] = useState('');
+
+  const onGetTodolist = () => {
+    const { status, data } = getTodoList();
+
+    if (status === 200) {
+      setContent('');
+      setList(data);
+    }
+  };
 
   useEffect(() => {
-    getTodoList();
+    onGetTodolist();
   }, []);
+
+  const onContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setContent(value);
+  };
+
+  const onContentSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const { key } = e;
+    if (key === 'Enter') {
+      if (!content.trim()) {
+        alert('빈 값은 입력할 수 없습니다.');
+        return;
+      }
+
+      const { status } = insertTodoItem({ content });
+
+      if (status === 200) {
+        onGetTodolist();
+      } else {
+        alert('추가에 실패하였습니다.');
+        return;
+      }
+    }
+  };
 
   const onDeleteClick = (e: React.MouseEvent<SVGSVGElement>) => {};
   const onTodoClick = (e: React.MouseEvent<SVGSVGElement>) => {};
@@ -20,7 +54,13 @@ function App() {
     <div className='App'>
       <header className='App-header'>React Todo</header>
       <form className='Todo-form'>
-        <input className='Todo-input' placeholder={PLACEHOLDER} />
+        <input
+          className='Todo-input'
+          placeholder={PLACEHOLDER}
+          value={content}
+          onChange={onContentChange}
+          onKeyPress={onContentSubmit}
+        />
       </form>
       <ul className='Todo-list'>
         {list.map((data) => (

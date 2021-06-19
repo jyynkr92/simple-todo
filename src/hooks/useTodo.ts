@@ -84,10 +84,20 @@ export default function useTodo() {
     }
   };
 
+  const updateTodoItemOrder = ({ list }: { list: Array<Todo> }) => {
+    try {
+      window.localStorage.setItem('list', JSON.stringify(list));
+      return { status: 200 };
+    } catch (error) {
+      return { status: 400 };
+    }
+  };
+
   return {
     getTodoList,
     insertTodoItem,
     updateTodoItem,
     deleteTodoItem,
+    updateTodoItemOrder,
   };
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Todo } from './store/Todo';
 import TodoItem from './components/TodoItem';
 import useTodo from './hooks/useTodo';
@@ -6,9 +6,11 @@ import useTodo from './hooks/useTodo';
 const PLACEHOLDER = '오늘 할일을 입력해주세요.';
 
 function App() {
-  const { getTodoList, insertTodoItem, updateTodoItem, deleteTodoItem } = useTodo();
+  const { getTodoList, insertTodoItem, updateTodoItem, deleteTodoItem, updateTodoItemOrder } = useTodo();
   const [list, setList] = useState<Array<Todo>>([]);
   const [content, setContent] = useState('');
+  const draggingItem = useRef<any>();
+  const dragOverItem = useRef<any>();
 
   const onGetTodolist = () => {
     const { status, data } = getTodoList();
@@ -73,6 +75,44 @@ function App() {
     }
   };
 
+  const onDragStart = (e: React.DragEvent<HTMLLIElement>) => {
+    const { idx } = e.currentTarget.dataset;
+    if (!idx) return;
+    draggingItem.current = parseInt(idx);
+  };
+
+  const onDragEnter = (e: React.DragEvent<HTMLLIElement>) => {
+    const { idx } = e.currentTarget.dataset;
+    if (!idx) return;
+    dragOverItem.current = parseInt(idx);
+  };
+
+  const onDragEnd = () => {
+    const listCopy = [...list];
+    const draggingItemContent = listCopy[draggingItem.current];
+    listCopy.splice(draggingItem.current, 1);
+    listCopy.splice(dragOverItem.current, 0, draggingItemContent);
+
+    draggingItem.current = null;
+    dragOverItem.current = null;
+
+    const reorderList = listCopy.map((data, idx) => {
+      return {
+        ...data,
+        order: idx,
+      };
+    });
+
+    const { status } = updateTodoItemOrder({ list: reorderList });
+
+    if (status === 200) {
+      onGetTodolist();
+    } else {
+      alert('수정에 실패하였습니다.');
+      return;
+    }
+  };
+
   return (
     <div className='App'>
       <header className='App-header'>React Todo</header>
@@ -86,14 +126,18 @@ function App() {
         />
       </form>
       <ul className='Todo-list'>
-        {list.map((data) => (
+        {list.map((data, idx) => (
           <TodoItem
             key={data.id}
             id={data.id}
+            idx={idx}
             content={data.content}
             isComplete={data.isComplete}
             onDeleteClick={onDeleteClick}
             onTodoClick={onTodoClick}
+            onDragStart={onDragStart}
+            onDragEnter={onDragEnter}
+            onDragEnd={onDragEnd}
           />
         ))}
       </ul>

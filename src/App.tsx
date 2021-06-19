@@ -1,29 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Todo } from './store/Todo';
 import TodoItem from './components/TodoItem';
 import useTodo from './hooks/useTodo';
 
 const PLACEHOLDER = '오늘 할일을 입력해주세요.';
 
 function App() {
-  const { getTodoList, insertTodoItem, updateTodoItem, deleteTodoItem, updateTodoItemOrder } = useTodo();
-  const [list, setList] = useState<Array<Todo>>([]);
+  const [list, getTodoList, insertTodoItem, updateTodoItem, deleteTodoItem, updateTodoItemOrder] = useTodo([]);
   const [content, setContent] = useState('');
   const draggingItem = useRef<any>();
   const dragOverItem = useRef<any>();
 
-  const onGetTodolist = () => {
-    const { status, data } = getTodoList();
-
-    if (status === 200) {
-      setContent('');
-      setList(data);
-    }
-  };
-
   useEffect(() => {
     onGetTodolist();
   }, []);
+
+  const onGetTodolist = () => {
+    getTodoList();
+    setContent('');
+  };
 
   const onContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;

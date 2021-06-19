@@ -1,8 +1,23 @@
 import randomStr from 'lib/getRandomStr';
+import { useCallback, useEffect, useState } from 'react';
 import { Todo } from 'store/Todo';
 
-export default function useTodo() {
-  const getTodoList = () => {
+export default function useTodo(itemList: Array<Todo>) {
+  const [list, setList] = useState<Array<Todo>>(itemList);
+
+  const getTodoList = useCallback(() => {
+    const { status, data } = getTodos();
+
+    if (status === 200) {
+      setList(data);
+    }
+  }, []);
+
+  useEffect(() => {
+    setList(itemList);
+  }, []);
+
+  const getTodos = useCallback(() => {
     try {
       const storage = window.localStorage.getItem('list');
       const list = storage ? JSON.parse(storage) : [];
@@ -11,9 +26,9 @@ export default function useTodo() {
     } catch (error) {
       return { status: 400, data: [] };
     }
-  };
+  }, []);
 
-  const insertTodoItem = ({ content }: { content: string }) => {
+  const insertTodoItem = useCallback(({ content }: { content: string }) => {
     try {
       const id = randomStr();
       const storage = window.localStorage.getItem('list');
@@ -31,9 +46,9 @@ export default function useTodo() {
     } catch (error) {
       return { status: 400 };
     }
-  };
+  }, []);
 
-  const updateTodoItem = ({ id }: { id: string }) => {
+  const updateTodoItem = useCallback(({ id }: { id: string }) => {
     try {
       const storage = window.localStorage.getItem('list');
       if (!storage) {
@@ -59,9 +74,9 @@ export default function useTodo() {
     } catch (error) {
       return { status: 400 };
     }
-  };
+  }, []);
 
-  const deleteTodoItem = ({ id }: { id: string }) => {
+  const deleteTodoItem = useCallback(({ id }: { id: string }) => {
     try {
       const storage = window.localStorage.getItem('list');
       if (!storage) {
@@ -82,22 +97,23 @@ export default function useTodo() {
     } catch (error) {
       return { status: 400 };
     }
-  };
+  }, []);
 
-  const updateTodoItemOrder = ({ list }: { list: Array<Todo> }) => {
+  const updateTodoItemOrder = useCallback(({ list }: { list: Array<Todo> }) => {
     try {
       window.localStorage.setItem('list', JSON.stringify(list));
       return { status: 200 };
     } catch (error) {
       return { status: 400 };
     }
-  };
+  }, []);
 
-  return {
-    getTodoList,
-    insertTodoItem,
-    updateTodoItem,
-    deleteTodoItem,
-    updateTodoItemOrder,
-  };
+  return [list, getTodoList, insertTodoItem, updateTodoItem, deleteTodoItem, updateTodoItemOrder] as [
+    Array<Todo>,
+    typeof getTodoList,
+    typeof insertTodoItem,
+    typeof updateTodoItem,
+    typeof deleteTodoItem,
+    typeof updateTodoItemOrder
+  ];
 }

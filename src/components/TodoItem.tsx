@@ -14,23 +14,37 @@ interface TodoItemProps {
 
 function TodoItem({ id, content, isComplete, onDeleteClick, onTodoClick }: TodoItemProps) {
   return (
-    <li className='Todo-item'>
+    <TodoLi className='Todo-item' isComplete={isComplete}>
       {!isComplete && <Tick className='Todo-check-icon' onClick={onTodoClick} data-target={id} />}
       {isComplete && <Done className='Todo-check-icon' onClick={onTodoClick} data-target={id} />}
-      <TodoContent isComplete={isComplete} className='Todo-text'>
-        {content}
-      </TodoContent>
+      <p className='Todo-text'>{content}</p>
       <Delete className='Todo-delete-icon' onClick={onDeleteClick} data-target={id} />
-    </li>
+    </TodoLi>
   );
 }
 
-interface TodoContentProps {
+interface TodoLiProps {
   isComplete: boolean;
 }
 
-const TodoContent = styled.p<TodoContentProps>`
-  text-decoration: ${({ isComplete }) => (isComplete ? `line-through` : `normal`)};
+const TodoLi = styled.li<TodoLiProps>`
+  p {
+    text-decoration: ${({ isComplete }) => (isComplete ? `line-through` : `normal`)};
+  }
+
+  &:hover {
+    .Todo-delete-icon {
+      visibility: visible;
+    }
+
+    .Todo-check-icon {
+      fill: #3ce6be;
+    }
+  }
+
+  .Todo-delete-icon {
+    visibility: hidden;
+  }
 `;
 
 export default TodoItem;

@@ -11,12 +11,11 @@ function App() {
   const dragOverItem = useRef<any>();
 
   useEffect(() => {
-    onGetTodolist();
+    getTodoList();
   }, []);
 
-  const onGetTodolist = () => {
-    getTodoList();
-    setContent('');
+  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
   };
 
   const onContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +32,7 @@ function App() {
       }
 
       insertTodoItem({ content });
+      setContent('');
     }
   };
 
@@ -82,7 +82,7 @@ function App() {
   return (
     <div className='App'>
       <header className='App-header'>React Todo</header>
-      <form className='Todo-form'>
+      <form className='Todo-form' onSubmit={onFormSubmit}>
         <input
           className='Todo-input'
           placeholder={PLACEHOLDER}

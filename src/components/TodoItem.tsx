@@ -51,8 +51,36 @@ interface TodoLiProps {
 }
 
 const TodoLi = styled.li<TodoLiProps>`
-  p {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 4px;
+  line-height: 40px;
+
+  .Todo-text {
+    cursor: pointer;
+    margin: 0;
+    font-size: 18px;
     text-decoration: ${({ isComplete }) => (isComplete ? `line-through` : `normal`)};
+    color: ${({ isComplete }) => (isComplete ? `#B5B7BF` : '#4D4D60')};
+  }
+  .Todo-check-icon {
+    width: 16px;
+    height: 16px;
+    fill: #d7d9e0;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+
+  .Todo-delete-icon {
+    width: 16px;
+    height: 16px;
+    fill: #b5b7bf;
+    margin-left: auto;
+    margin-right: 16px;
+    cursor: pointer;
   }
 
   &:hover {
@@ -63,10 +91,6 @@ const TodoLi = styled.li<TodoLiProps>`
     .Todo-check-icon {
       fill: #3ce6be;
     }
-  }
-
-  .Todo-delete-icon {
-    display: none;
   }
 `;
 

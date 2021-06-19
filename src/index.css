@@ -21,7 +21,7 @@ body {
 .App-header {
   font-size: 48px;
   font-weight: bold;
-  color: #4D4D60;
+  color: #4d4d60;
   text-align: center;
   padding-bottom: 32px;
 }
@@ -47,11 +47,11 @@ input:focus {
   width: 100%;
   font-size: 20px;
   line-height: 1.6;
-  color: #4D4D60;
+  color: #4d4d60;
 }
 
 .Todo-input::placeholder {
-  color: #B5B7BF
+  color: #b5b7bf;
 }
 
 .Todo-list {
@@ -61,7 +61,7 @@ input:focus {
   padding: 0;
 }
 
-li {
+/* li {
   display: flex;
   align-items: center;
   list-style: none;
@@ -69,19 +69,19 @@ li {
   height: 40px;
   margin-bottom: 4px;
   line-height: 40px;
-}
+} */
 
-.Todo-text {
+/* .Todo-text {
   margin: 0;
   font-size: 18px;
   color: #4D4D60;
   cursor: pointer;
-}
+} */
 
-.Todo-check-icon {
+/* .Todo-check-icon {
   width: 16px;
   height: 16px;
-  fill: #D7D9E0;
+  fill: #d7d9e0;
   margin-right: 8px;
   cursor: pointer;
 }
@@ -89,17 +89,17 @@ li {
 .Todo-delete-icon {
   width: 16px;
   height: 16px;
-  fill: #B5B7BF;
+  fill: #b5b7bf;
   margin-left: auto;
   margin-right: 16px;
   cursor: pointer;
-}
+} */
 
-.Todo-item__done .Todo-text{
+/* .Todo-item__done .Todo-text{
   text-decoration: line-through;
   color: #B5B7BF;
-}
+} */
 
-.Todo-check-icon__done{
+.Todo-check-icon__done {
   margin-right: 8px;
 }

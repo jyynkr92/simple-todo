@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
-import { ReactComponent as Tick } from './Icons/tick.svg';
-import { ReactComponent as Done } from './Icons/done.svg';
-import { ReactComponent as Delete } from './Icons/x-mark.svg';
+import React, { useEffect, useState } from 'react';
 import { Todo } from './store/Todo';
 import TodoItem from './components/TodoItem';
+import useTodo from './hooks/useTodo';
 
 const PLACEHOLDER = '오늘 할일을 입력해주세요.';
 
 function App() {
+  const { getTodoList } = useTodo();
   const [list, setList] = useState<Array<Todo>>([]);
+
+  useEffect(() => {
+    getTodoList();
+  }, []);
 
   const onDeleteClick = (e: React.MouseEvent<SVGSVGElement>) => {};
   const onTodoClick = (e: React.MouseEvent<SVGSVGElement>) => {};
@@ -30,21 +33,6 @@ function App() {
             onTodoClick={onTodoClick}
           />
         ))}
-        <li className='Todo-item'>
-          <Tick className='Todo-check-icon' />
-          <p className='Todo-text'>javascript.info에서 javascript 공부</p>
-          <Delete className='Todo-delete-icon' />
-        </li>
-        <li className='Todo-item'>
-          <Tick className='Todo-check-icon' />
-          <p className='Todo-text'>javascript.info에서 javascript 공부</p>
-          <Delete className='Todo-delete-icon' />
-        </li>
-        <li className='Todo-item__done'>
-          <Done className='Todo-check-icon__done' />
-          <p className='Todo-text'>javascript.info에서 javascript 공부</p>
-          <Delete className='Todo-delete-icon' />
-        </li>
       </ul>
     </div>
   );

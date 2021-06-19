@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as Tick } from './Icons/tick.svg';
-import { ReactComponent as Done } from './Icons/done.svg';
-import { ReactComponent as Delete } from './Icons/x-mark.svg';
+import { ReactComponent as Tick } from 'Icons/tick.svg';
+import { ReactComponent as Done } from 'Icons/done.svg';
+import { ReactComponent as Delete } from 'Icons/x-mark.svg';
 
 interface TodoItemProps {
   id: string;

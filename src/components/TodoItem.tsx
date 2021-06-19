@@ -34,7 +34,7 @@ const TodoLi = styled.li<TodoLiProps>`
 
   &:hover {
     .Todo-delete-icon {
-      visibility: visible;
+      display: inline-block;
     }
 
     .Todo-check-icon {
@@ -43,7 +43,7 @@ const TodoLi = styled.li<TodoLiProps>`
   }
 
   .Todo-delete-icon {
-    visibility: hidden;
+    display: none;
   }
 `;
 

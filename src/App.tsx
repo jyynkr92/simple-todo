@@ -6,7 +6,7 @@ import useTodo from './hooks/useTodo';
 const PLACEHOLDER = '오늘 할일을 입력해주세요.';
 
 function App() {
-  const { getTodoList, insertTodoItem, updateTodoItem } = useTodo();
+  const { getTodoList, insertTodoItem, updateTodoItem, deleteTodoItem } = useTodo();
   const [list, setList] = useState<Array<Todo>>([]);
   const [content, setContent] = useState('');
 
@@ -47,7 +47,18 @@ function App() {
     }
   };
 
-  const onDeleteClick = (e: React.MouseEvent<SVGSVGElement>) => {};
+  const onDeleteClick = (e: React.MouseEvent<SVGSVGElement>) => {
+    const { target } = e.currentTarget.dataset;
+    if (!target) return;
+    const { status } = deleteTodoItem({ id: target });
+
+    if (status === 200) {
+      onGetTodolist();
+    } else {
+      alert('수정에 실패하였습니다.');
+      return;
+    }
+  };
 
   const onTodoClick = (e: React.MouseEvent<SVGSVGElement>) => {
     const { target } = e.currentTarget.dataset;

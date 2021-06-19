@@ -32,41 +32,20 @@ function App() {
         return;
       }
 
-      const { status } = insertTodoItem({ content });
-
-      if (status === 200) {
-        onGetTodolist();
-      } else {
-        alert('추가에 실패하였습니다.');
-        return;
-      }
+      insertTodoItem({ content });
     }
   };
 
   const onDeleteClick = (e: React.MouseEvent<SVGSVGElement>) => {
     const { target } = e.currentTarget.dataset;
     if (!target) return;
-    const { status } = deleteTodoItem({ id: target });
-
-    if (status === 200) {
-      onGetTodolist();
-    } else {
-      alert('수정에 실패하였습니다.');
-      return;
-    }
+    deleteTodoItem({ id: target });
   };
 
   const onTodoClick = (e: React.MouseEvent<SVGSVGElement>) => {
     const { target } = e.currentTarget.dataset;
     if (!target) return;
-    const { status } = updateTodoItem({ id: target });
-
-    if (status === 200) {
-      onGetTodolist();
-    } else {
-      alert('수정에 실패하였습니다.');
-      return;
-    }
+    updateTodoItem({ id: target });
   };
 
   const onDragStart = (e: React.DragEvent<HTMLLIElement>) => {
@@ -97,14 +76,7 @@ function App() {
       };
     });
 
-    const { status } = updateTodoItemOrder({ list: reorderList });
-
-    if (status === 200) {
-      onGetTodolist();
-    } else {
-      alert('수정에 실패하였습니다.');
-      return;
-    }
+    updateTodoItemOrder({ list: reorderList });
   };
 
   return (

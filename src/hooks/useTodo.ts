@@ -42,9 +42,10 @@ export default function useTodo(itemList: Array<Todo>) {
       const list = JSON.parse(storage) as Array<Todo>;
       const todoItem = { id, content, isComplete: false, order: list.length };
       window.localStorage.setItem('list', JSON.stringify(list.concat(todoItem)));
-      return { status: 200 };
+      getTodoList();
     } catch (error) {
-      return { status: 400 };
+      alert('추가에 실패하였습니다.');
+      return;
     }
   }, []);
 
@@ -70,9 +71,10 @@ export default function useTodo(itemList: Array<Todo>) {
       });
 
       window.localStorage.setItem('list', JSON.stringify(todoList));
-      return { status: 200 };
+      getTodoList();
     } catch (error) {
-      return { status: 400 };
+      alert('수정에 실패하였습니다.');
+      return;
     }
   }, []);
 
@@ -93,18 +95,19 @@ export default function useTodo(itemList: Array<Todo>) {
       const todoList = list.filter((data) => data.id !== id);
 
       window.localStorage.setItem('list', JSON.stringify(todoList));
-      return { status: 200 };
+      getTodoList();
     } catch (error) {
-      return { status: 400 };
+      alert('삭제에 실패하였습니다.');
+      return;
     }
   }, []);
 
   const updateTodoItemOrder = useCallback(({ list }: { list: Array<Todo> }) => {
     try {
       window.localStorage.setItem('list', JSON.stringify(list));
-      return { status: 200 };
+      getTodoList();
     } catch (error) {
-      return { status: 400 };
+      alert('수정에 실패하였습니다.');
     }
   }, []);
 

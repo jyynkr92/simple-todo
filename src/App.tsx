@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 import TodoItem from './components/TodoItem';
 import useTodo from './hooks/useTodo';
 
@@ -42,7 +43,7 @@ function App() {
     deleteTodoItem({ id: target });
   };
 
-  const onTodoClick = (e: React.MouseEvent<SVGSVGElement>) => {
+  const onTodoClick = (e: React.MouseEvent<SVGSVGElement | HTMLParagraphElement>) => {
     const { target } = e.currentTarget.dataset;
     if (!target) return;
     updateTodoItem({ id: target });
@@ -80,9 +81,9 @@ function App() {
   };
 
   return (
-    <div className='App'>
-      <header className='App-header'>React Todo</header>
-      <form className='Todo-form' onSubmit={onFormSubmit}>
+    <AppDiv className='App'>
+      <AppHeader className='App-header'>React Todo</AppHeader>
+      <TodoFrom className='Todo-form' onSubmit={onFormSubmit}>
         <input
           className='Todo-input'
           placeholder={PLACEHOLDER}
@@ -90,8 +91,8 @@ function App() {
           onChange={onContentChange}
           onKeyPress={onContentSubmit}
         />
-      </form>
-      <ul className='Todo-list'>
+      </TodoFrom>
+      <TodoList className='Todo-list'>
         {list.map((data, idx) => (
           <TodoItem
             key={data.id}
@@ -106,9 +107,63 @@ function App() {
             onDragEnd={onDragEnd}
           />
         ))}
-      </ul>
-    </div>
+      </TodoList>
+    </AppDiv>
   );
 }
+
+const AppDiv = styled.div`
+  width: 100vw;
+  height: 100vh;
+  padding: 64px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const AppHeader = styled.header`
+  font-size: 48px;
+  font-weight: bold;
+  color: #4d4d60;
+  text-align: center;
+  padding-bottom: 32px;
+`;
+
+const TodoFrom = styled.form`
+  width: 70%;
+  max-width: 680px;
+  margin-bottom: 16px;
+  padding: 0 8px;
+  border-bottom: 1px solid #979797;
+
+  input {
+    border: none;
+    padding: 0;
+    margin: 0;
+
+    &:focus {
+      outline: unset;
+    }
+
+    &.Todo-input {
+      width: 100%;
+      font-size: 20px;
+      line-height: 1.6;
+      color: #4d4d60;
+
+      &::placeholder {
+        color: #b5b7bf;
+      }
+    }
+  }
+`;
+
+const TodoList = styled.ul`
+  width: 70%;
+  max-width: 680px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+`;
 
 export default App;

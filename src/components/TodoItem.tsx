@@ -10,7 +10,7 @@ interface TodoItemProps {
   content: string;
   isComplete: boolean;
   onDeleteClick: (e: React.MouseEvent<SVGSVGElement>) => void;
-  onTodoClick: (e: React.MouseEvent<SVGSVGElement>) => void;
+  onTodoClick: (e: React.MouseEvent<SVGSVGElement | HTMLParagraphElement>) => void;
   onDragStart: (e: React.DragEvent<HTMLLIElement>) => void;
   onDragEnter: (e: React.DragEvent<HTMLLIElement>) => void;
   onDragEnd: (e: React.DragEvent<HTMLLIElement>) => void;
@@ -40,7 +40,9 @@ function TodoItem({
     >
       {!isComplete && <Tick className='Todo-check-icon' onClick={onTodoClick} data-target={id} />}
       {isComplete && <Done className='Todo-check-icon' onClick={onTodoClick} data-target={id} />}
-      <p className='Todo-text'>{content}</p>
+      <p className='Todo-text' onClick={onTodoClick} data-target={id}>
+        {content}
+      </p>
       <Delete className='Todo-delete-icon' onClick={onDeleteClick} data-target={id} />
     </TodoLi>
   );
@@ -52,7 +54,7 @@ interface TodoLiProps {
 
 const TodoLi = styled.li<TodoLiProps>`
   display: flex;
-  align-items: center;
+  align-items: baseline;
   list-style: none;
   width: 100%;
   height: 40px;
@@ -81,6 +83,7 @@ const TodoLi = styled.li<TodoLiProps>`
     margin-left: auto;
     margin-right: 16px;
     cursor: pointer;
+    display: none;
   }
 
   &:hover {

@@ -9,24 +9,24 @@ body {
   box-sizing: border-box;
 }
 
-.App {
+/* .App {
   width: 100vw;
   height: 100vh;
   padding: 64px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
+} */
 
-.App-header {
+/* .App-header {
   font-size: 48px;
   font-weight: bold;
   color: #4d4d60;
   text-align: center;
   padding-bottom: 32px;
-}
+} */
 
-.Todo-form {
+/* .Todo-form {
   width: 680px;
   margin-bottom: 16px;
   padding: 0 8px;
@@ -52,14 +52,14 @@ input:focus {
 
 .Todo-input::placeholder {
   color: #b5b7bf;
-}
+} */
 
-.Todo-list {
+/* .Todo-list {
   width: 680px;
   height: 100%;
   margin: 0;
   padding: 0;
-}
+} */
 
 /* li {
   display: flex;
@@ -100,6 +100,6 @@ input:focus {
   color: #B5B7BF;
 } */
 
-.Todo-check-icon__done {
+/* .Todo-check-icon__done {
   margin-right: 8px;
-}
+} */

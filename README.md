@@ -1,8 +1,6 @@
 # 결과 영상
 
-<figure class="video_container">
-  <iframe src="./video/browsertest.mov" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
+![](./video/browsertest.mov)
 
 # 과제 설명
 

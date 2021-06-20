@@ -67,7 +67,10 @@ const TodoLi = styled.li<TodoLiProps>`
     font-size: 18px;
     text-decoration: ${({ isComplete }) => (isComplete ? `line-through` : `normal`)};
     color: ${({ isComplete }) => (isComplete ? `#B5B7BF` : '#4D4D60')};
+    width: 80%;
+    word-break: break-all;
   }
+
   .Todo-check-icon {
     width: 16px;
     height: 16px;
